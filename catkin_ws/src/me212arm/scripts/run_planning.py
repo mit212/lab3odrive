@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-# 2.12 Lab 5 trajectory planning
+# 2.12 Lab 3 trajectory planning
 # Peter Yu Oct 2016
+# Jerry Ng Feb 2020
 import rospy
 import planner
 import std_msgs.msg, sensor_msgs.msg
@@ -13,7 +14,8 @@ exec_joint1_pub = rospy.Publisher('/joint1_controller/command', std_msgs.msg.Flo
 exec_joint2_pub = rospy.Publisher('/joint2_controller/command', std_msgs.msg.Float64, queue_size=1)
 exec_joint_pub = rospy.Publisher('/virtual_joint_states', sensor_msgs.msg.JointState, queue_size=10)
 
-use_real_arm = rospy.get_param('/real_arm', False)
+use_real_arm = False #Set to True at the end of the lab
+#rospy.get_param('/real_arm', False)
 
 if __name__=="__main__":
     radius = 0.05          # (meter)
