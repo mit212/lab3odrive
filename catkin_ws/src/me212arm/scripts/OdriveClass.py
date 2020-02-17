@@ -49,7 +49,7 @@ class Odrive:
         self.home_kd = [[[0,0],[0,0]]]
         self.kPd = [[[0,0],[0,0]]]
         self.kDd = [[[0,0],[0,0]]]
-        self.axis = [ , ]
+        self.axis = []
         self.CPR2RAD = (2*math.pi/400000)
         self.connect_all()
         self.set_gains(0.1,  0.0001,0)
