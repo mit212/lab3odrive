@@ -52,7 +52,6 @@ class Odrive:
 
         self.CPR2RAD = (2*math.pi/400000)
         self.connect_all()
-        self.full_init()
         self.set_gains(0.1,  0.0001,0)
 
     def connect_all(self):
@@ -78,16 +77,16 @@ class Odrive:
 
     def printErrorStates(self):
         for i in self.axis:
-            print(' axis error:',hex(self.axis[i].error))
-            print( ' motor error:',hex(self.axis[i].motor.error))
-            print( ' encoder error:',hex(self.axis[i].encoder.error))
+            print(' axis error:',hex(i.error))
+            print( ' motor error:',hex(i.motor.error))
+            print( ' encoder error:',hex(i.encoder.error))
 
 
     def printPos(self):
         for i in self.axis:
-            print(' pos_estimate: ', self.axis[i].encoder.pos_estimate)
-            print(' count_in_cpr: ',self.axis[i].encoder.count_in_cpr)
-            print(' shadow_count: ', self.axis[i].encoder.shadow_count)
+            print(' pos_estimate: ', i.encoder.pos_estimate)
+            print(' count_in_cpr: ', i.encoder.count_in_cpr)
+            print(' shadow_count: ', i.encoder.shadow_count)
 
 
     def print_all(self):
@@ -126,15 +125,16 @@ class Odrive:
 
     def startup_init(self):
         print('Initializing encoder calibration sequence')
-        self.axis[i].requested_state = AXIS_STATE_IDLE
-        time.sleep(1)
-        self.axis[i].requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
-        time.sleep(10)
-        self.axis[i].requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
-        time.sleep(10)
-        self.axis[i].requested_state = AXIS_STATE_IDLE
-        time.sleep(1)
-        self.initflag=1
+        for i in self.axis:
+            i.requested_state = AXIS_STATE_IDLE
+            time.sleep(1)
+            i.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
+            time.sleep(10)
+            i.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+            time.sleep(10)
+            i.requested_state = AXIS_STATE_IDLE
+            time.sleep(1)
+            self.initflag=1
 
     def full_init(self,reset = True):
         if(reset):
