@@ -52,7 +52,6 @@ class Odrive:
         self.axis = []
         self.CPR2RAD = (2*math.pi/400000)
         self.connect_all()
-        self.set_gains(0.1,  0.0001,0)
 
     def connect_all(self):
         #Connects to odrives of specified serial ids
@@ -196,11 +195,11 @@ class Odrive:
         self.odrv.save_configuration()
 
     def set_gains(self,i,kpp,kvp,kvi = 0):
-         self.axis[i].requested_state=AXIS_STATE_IDLE
-         self.axis[i].controller.config.pos_gain = kpp
-         self.axis[i].controller.config.vel_gain = kvp
-         self.axis[i].controller.config.vel_integrator_gain = kvi
-         time.sleep(1)
+        self.axis[i].requested_state=AXIS_STATE_IDLE
+        self.axis[i].controller.config.pos_gain = kpp
+        self.axis[i].controller.config.vel_gain = kvp
+        self.axis[i].controller.config.vel_integrator_gain = kvi
+        time.sleep(1)
 
 
 
