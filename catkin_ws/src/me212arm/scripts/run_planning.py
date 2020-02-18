@@ -24,7 +24,7 @@ exec_joint_pub = rospy.Publisher('/virtual_joint_states', sensor_msgs.msg.JointS
 rospy.Subscriber('/joint1_controller/position', std_msgs.msg.Float64, joint1_callback)
 rospy.Subscriber('/joint2_controller/position', std_msgs.msg.Float64, joint2_callback)
 use_real_arm = True 
-circle = False #Change this in the last part of the lab
+circle = False #EDIT THIS: Change this to True when generating a circular trajectory
 
 if __name__=="__main__":
     radius = 0.2         # (meter)
@@ -34,8 +34,8 @@ if __name__=="__main__":
     rospy.wait_for_message('/joint2_controller/position', std_msgs.msg.Float64)
     if circle:
         for theta in np.linspace(0, 4*np.pi,500):
-            target_xz =   ## [??, ??] use theta, radius, and center in your code
-            q_sol = ## planner.ik( ?? )
+            target_xz =   # [??, ??] EDIT THIS: use theta, radius, and center in your code
+            q_sol =  # planner.ik( ?? ) EDIT THIS: You should be using the planner.ik function
             if q_sol is None:
                 print 'no ik solution'
                 rospy.sleep(0.01)
@@ -49,6 +49,6 @@ if __name__=="__main__":
             rospy.sleep(0.01)
     else: 
         target_xz =  center
-        q_sol = planner.ik(target_xz, q0)       ## planner.ik( ?? )
+        q_sol = planner.ik(target_xz, q0)
         exec_joint1_pub.publish(std_msgs.msg.Float64(-q_sol[0]))
         exec_joint2_pub.publish(std_msgs.msg.Float64(-q_sol[1]))
