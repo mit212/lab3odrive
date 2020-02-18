@@ -28,8 +28,8 @@ use_real_arm = True #Set to True at the end of the lab
 
 
 if __name__=="__main__":
-    radius = 0.25          # (meter)
-    center = [1.2, 1.2]  # (x,z) meter
+    radius = 0.2         # (meter)
+    center = [1.2, 1.1]  # (x,z) meter
     rospy.sleep(1)
     rospy.wait_for_message('/joint1_controller/position', std_msgs.msg.Float64)
     rospy.wait_for_message('/joint2_controller/position', std_msgs.msg.Float64)
