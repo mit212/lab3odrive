@@ -7,5 +7,8 @@ from OdriveClass import Odrive
 
 odrivestring = '2087377B3548'
 if __name__ == '__main__':
+# 	myodrive = Odrive(odrivestring)
+# 	myodrive.erase_and_reboot()
+
 	myodrive = Odrive(odrivestring)
 	myodrive.full_init()

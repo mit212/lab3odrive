@@ -52,6 +52,11 @@ class Odrive:
         self.axis = []
         self.CPR2RAD = (2*math.pi/400000)
         self.connect_all()
+        self.printErrorStates()
+
+        print("Setting gains to default")
+        self.set_gains(i = 0)
+        self.set_gains(i = 1)
 
     def connect_all(self):
         #Connects to odrives of specified serial ids
@@ -101,7 +106,7 @@ class Odrive:
         connect_all()
         print('Rebooted ')
 
-    def trajMoveCnt(self, axis_num, posDesired = 10000, velDesired = 50000, accDesired = 50000):
+    def trajMoveCnt(self, axis_num, posDesired = 10000, velDesired = 25000, accDesired = 50000):
         #Move to a position with a specified trajectory
         if(axis_num == 0):
             self.axis[0].trap_traj.config.vel_limit = velDesired 
@@ -128,9 +133,9 @@ class Odrive:
             i.requested_state = AXIS_STATE_IDLE
             time.sleep(1)
             i.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
-            time.sleep(10)
+            time.sleep(5)
             i.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
-            time.sleep(10)
+            time.sleep(5)
             i.requested_state = AXIS_STATE_IDLE
             time.sleep(1)
             self.initflag=1
@@ -166,11 +171,11 @@ class Odrive:
             self.axis[i].config.startup_encoder_offset_calibration = True
             self.axis[i].controller.config.control_mode = CTRL_MODE_POSITION_CONTROL
             self.printErrorStates()
-            kP_des = 0.1
-            kD_des = 0.0001
+            kP_des = 2
+            kD_des = 0.0002
             self.axis[i].controller.config.pos_gain = kP_des 
             self.axis[i].controller.config.vel_gain = kD_des
-            self.axis[i].controller.config.vel_integrator_gain = 0
+            self.axis[i].controller.config.vel_integrator_gain = 0.001
             self.axis[i].controller.pos_setpoint = 0
             time.sleep(1)
 
@@ -188,13 +193,13 @@ class Odrive:
         #100000 = quarter rev per second
         self.axis[num].requested_state=AXIS_STATE_CLOSED_LOOP_CONTROL
         self.axis[num].controller.config.control_mode=CTRL_MODE_VELOCITY_CONTROL
-        self.axis[num].controller.vel_setpoint=vel_setpt
+        self.axis[num].controller.vel_setpoint = vel_setpt
     
 
     def make_perm(self):
         self.odrv.save_configuration()
 
-    def set_gains(self,i,kpp,kvp,kvi = 0):
+    def set_gains(self,i,kpp = 0.3,kvp = 0.0002,kvi = 0.0001):
         self.axis[i].requested_state=AXIS_STATE_IDLE
         self.axis[i].controller.config.pos_gain = kpp
         self.axis[i].controller.config.vel_gain = kvp

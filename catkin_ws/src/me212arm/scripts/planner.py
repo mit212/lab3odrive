@@ -1,12 +1,12 @@
 import numpy as np
 
 joint_limits = [
-    [-np.pi/2, np.pi/4],  # make joint 1 smaller from real
-    [-np.pi, np.pi]]
+    [-np.pi/2, np.pi/2],  # make joint 1 smaller from real
+    [-np.pi/2, np.pi/2]]
 
 # length of two links in meters
-a1 = 0.1778
-a2 = 0.235
+a1 = 1
+a2 = 1
 
 def in_joint_range(q):
     for i, qi in enumerate(q):
@@ -23,6 +23,7 @@ def select_best_q(candidates, q0, weight = [1,1]):
         if (min_v == None or min_v > v) and in_joint_range(q):
             min_v = v
             best_q = q
+
     return best_q
 
 def ik(target_TCP_xz, q0):
@@ -30,7 +31,6 @@ def ik(target_TCP_xz, q0):
     ik_candidate = []
     
     xz2 = x**2 + z**2  ## In Python, x**y: x to the power y
-    
     # candidate 1
     # q_1 and q_2 are in RADIANS
     q_2 = 2*np.arctan(np.sqrt((a1+a2)**2 - xz2)/np.sqrt((xz2 - (a1 - a2)**2)))# ??
@@ -45,7 +45,6 @@ def ik(target_TCP_xz, q0):
 
     if not np.isnan([q_1, q_2]).any():
         ik_candidate.append([q_1, q_2])
-    
     return select_best_q(ik_candidate, q0)
 
 def ikv(target_TCP_vel, q0):
