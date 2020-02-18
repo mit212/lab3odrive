@@ -15,11 +15,10 @@ def in_joint_range(q):
     return True
     
 def select_best_q(candidates, q0, weight = [1,1]):
-    # we prefer minimum travel
     min_v = None
     best_q = None
     for q in candidates:
-        v = np.sum(((np.array(q) - np.array(q0)) * np.array(weight)) ** 2)
+        v = np.sum(((np.array(q) - np.array(q0)) * np.array(weight)) ** 2) #What does this cost function do?
         if (min_v == None or min_v > v) and in_joint_range(q):
             min_v = v
             best_q = q
@@ -33,15 +32,15 @@ def ik(target_TCP_xz, q0):
     xz2 = x**2 + z**2  ## In Python, x**y: x to the power y
     # candidate 1
     # q_1 and q_2 are in RADIANS
-    q_2 = 2*np.arctan(np.sqrt((a1+a2)**2 - xz2)/np.sqrt((xz2 - (a1 - a2)**2)))# ??
-    q_1 = -np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*(np.cos(q_2)))## ??
+    q_2 = # ??
+    q_1 = # ??
 
     if not np.isnan([q_1, q_2]).any():
         ik_candidate.append([q_1, q_2])
     
     # candidate 2
-    q_2 = -2*np.arctan(np.sqrt((a1+a2)**2 - xz2)/np.sqrt((xz2 - (a1 - a2)**2)))# ??
-    q_1 = -np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*(np.cos(q_2)))## ??
+    q_2 = # ??
+    q_1 = # ??
 
     if not np.isnan([q_1, q_2]).any():
         ik_candidate.append([q_1, q_2])

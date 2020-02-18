@@ -10,7 +10,7 @@ import numpy as np
 from OdriveClass import Odrive
 
 USE_REAL_ARM = True
-odrive_id = '2087377B3548' #Odrive SN
+odrive_id = '' #'2087377B3548' Odrive SN
 full_rev = 400000 #Number of counts in a full revolution
 CURR_THRESHOLD = 2
 class OdriveController:
@@ -149,7 +149,5 @@ if __name__ == '__main__':
 		controller = OdriveController(odrive_id)
 		rospy.spin()
 
-	else:
-		exec_joint_pub = rospy.Publisher('/virtual_joint_states', sensor_msgs.msg.JointState, queue_size=10)
 
 

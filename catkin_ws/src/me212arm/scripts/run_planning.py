@@ -23,9 +23,8 @@ exec_joint2_pub = rospy.Publisher('/joint2_controller/command', std_msgs.msg.Flo
 exec_joint_pub = rospy.Publisher('/virtual_joint_states', sensor_msgs.msg.JointState, queue_size=10)
 rospy.Subscriber('/joint1_controller/position', std_msgs.msg.Float64, joint1_callback)
 rospy.Subscriber('/joint2_controller/position', std_msgs.msg.Float64, joint2_callback)
-use_real_arm = True #Set to True at the end of the lab
-#rospy.get_param('/real_arm', False)
-
+use_real_arm = True 
+circle = False #Change this in the last part of the lab
 
 if __name__=="__main__":
     radius = 0.2         # (meter)
@@ -33,22 +32,23 @@ if __name__=="__main__":
     rospy.sleep(1)
     rospy.wait_for_message('/joint1_controller/position', std_msgs.msg.Float64)
     rospy.wait_for_message('/joint2_controller/position', std_msgs.msg.Float64)
-    q_sol = planner.ik(center, q0)
-    for theta in np.linspace(0, 4*np.pi,500):
-        target_xz =  (radius*np.cos(theta)+center[0], radius*np.sin(theta)+center[1]) ## [??, ??] use theta in your code
-        q_sol = planner.ik(target_xz, q0)       ## planner.ik( ?? )
-        if q_sol is None:
-            print 'no ik solution'
-            rospy.sleep(0.01)
-        else:
-            print '(q_1,q_2)=', q_sol
-            if use_real_arm:
-                exec_joint1_pub.publish(std_msgs.msg.Float64(-q_sol[0]))
-                exec_joint2_pub.publish(std_msgs.msg.Float64(-q_sol[1]))
+    if circle:
+        for theta in np.linspace(0, 4*np.pi,500):
+            target_xz =   ## [??, ??] use theta, radius, and center in your code
+            q_sol = ## planner.ik( ?? )
+            if q_sol is None:
+                print 'no ik solution'
+                rospy.sleep(0.01)
             else:
-                js = sensor_msgs.msg.JointState(name=['joint1', 'joint2'], position = q_sol)
-                exec_joint_pub.publish(js)
-            q0 = q_sol
+                print '(q_1,q_2)=', q_sol
+                if use_real_arm:
+                    exec_joint1_pub.publish(std_msgs.msg.Float64(-q_sol[0]))
+                    exec_joint2_pub.publish(std_msgs.msg.Float64(-q_sol[1]))
+                q0 = q_sol
 
-        rospy.sleep(0.02)
-
+            rospy.sleep(0.01)
+    else: 
+        target_xz =  center
+        q_sol = planner.ik(target_xz, q0)       ## planner.ik( ?? )
+        exec_joint1_pub.publish(std_msgs.msg.Float64(-q_sol[0]))
+        exec_joint2_pub.publish(std_msgs.msg.Float64(-q_sol[1]))
