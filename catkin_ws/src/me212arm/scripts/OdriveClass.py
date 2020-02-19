@@ -133,9 +133,9 @@ class Odrive:
             i.requested_state = AXIS_STATE_IDLE
             time.sleep(1)
             i.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
-            time.sleep(5)
+            time.sleep(10)
             i.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
-            time.sleep(5)
+            time.sleep(10)
             i.requested_state = AXIS_STATE_IDLE
             time.sleep(1)
             self.initflag=1
