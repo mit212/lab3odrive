@@ -88,14 +88,15 @@ class OdriveController:
 		#Feasible if greater than the zeroing position and less than 1/3 of a revolution away from zero
 		if motor_location == 1:
 			if (set_pos > -1*full_rev/4) and (set_pos < 1*full_rev/4):
-				print(set_pos)
 				return True
+			else:
+				return False
 		elif motor_location == 2:
 			if (set_pos > -1.5*full_rev/4) and (set_pos < 1*full_rev/4):
-				print(set_pos)
 				return True
+			else:
+				return False
 		else:
-			print(set_pos)
 			return False
 
 	def check_val(self,axis):
