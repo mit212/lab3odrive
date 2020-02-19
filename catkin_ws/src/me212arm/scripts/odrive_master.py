@@ -12,7 +12,7 @@ from OdriveClass import Odrive
 USE_REAL_ARM = True
 odrive_id = '' #'2087377B3548' Odrive SN
 full_rev = 400000 #Number of counts in a full revolution
-CURR_THRESHOLD = 2
+CURR_THRESHOLD = 1.5
 class OdriveController:
 	def __init__(self, odrive_ids):
 		#Assumes ODrives are used in order of first link then second link
