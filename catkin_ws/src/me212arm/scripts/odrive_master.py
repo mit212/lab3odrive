@@ -73,7 +73,7 @@ class OdriveController:
 
 				if(abs(self.axes[i].motor.current_control.Iq_measured) > CURR_THRESHOLD):
 					self.axes[i].controller.vel_setpoint = 0
-					ctrl.PosMove(pos_setpt = self.axes[i].encoder.pos_estimate)
+					ctrl.PosMove(pos_setpt = self.axes[i].encoder.pos_estimate, num = i)
 					home = True
 				rospy.sleep(0.01)
 

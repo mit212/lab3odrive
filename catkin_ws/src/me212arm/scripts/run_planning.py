@@ -34,8 +34,8 @@ if __name__=="__main__":
     rospy.wait_for_message('/joint2_controller/position', std_msgs.msg.Float64)
     if circle:
         for theta in np.linspace(0, 4*np.pi,500):
-            target_xz =   # [??, ??] EDIT THIS: use theta, radius, and center in your code
-            q_sol =  # planner.ik( ?? ) EDIT THIS: You should be using the planner.ik function
+            target_xz =   []# [??, ??] EDIT THIS: use theta, radius, and center in your code
+            q_sol =  []# planner.ik( ?? ) EDIT THIS: You should be using the planner.ik function
             if q_sol is None:
                 print 'no ik solution'
                 rospy.sleep(0.01)
