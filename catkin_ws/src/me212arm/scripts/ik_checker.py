@@ -24,7 +24,8 @@ if __name__=="__main__":
             print(correct_list[i])
             target_xz =  end_point_list[i]
             q_sol = planner.ik(target_xz, q0)
-            if abs(q_sol - correct_list[i]) < epsilon:
+            
+            if abs(q_sol[0] - correct_list[i][0]) < epsilon and abs(q_sol[1] - correct_list[i][1]) < epsilon:
                 valid_ik = valid_ik
             else:
                 valid_ik = False
