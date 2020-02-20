@@ -27,8 +27,8 @@ use_real_arm = True
 circle = False #EDIT THIS: Change this to True when generating a circular trajectory
 
 if __name__=="__main__":
-    radius = 0.2         # (meter)
-    center = [1.2, 1.1]  # (x,z) meter
+    radius = 0.2         # (distance)
+    center = [1.2, 1.1]  # (x,z) distance
     rospy.sleep(1)
     rospy.wait_for_message('/joint1_controller/position', std_msgs.msg.Float64)
     rospy.wait_for_message('/joint2_controller/position', std_msgs.msg.Float64)
