@@ -119,7 +119,7 @@ class OdriveController:
 		set_pos_global = self.RAD2CNT(data.data)
 		feasible = self.check_limits(1,set_pos_global)
 		if(feasible):
-			set_pos = set_pos_global - self.ctrl_limit[0]
+			set_pos = set_pos_global + self.ctrl_limit[0]
 			self.odrive_ctrl.trajMoveCnt(0, posDesired = set_pos)
 		else:
 			#Do nothing if its not feasible
@@ -130,7 +130,7 @@ class OdriveController:
 		set_pos_global = self.RAD2CNT(data.data)
 		feasible = self.check_limits(2,set_pos_global)
 		if(feasible):
-			set_pos = set_pos_global - self.ctrl_limit[1]
+			set_pos = set_pos_global + self.ctrl_limit[1]
 			self.odrive_ctrl.trajMoveCnt(1, posDesired = set_pos)
 		else:
 			#Do nothing if its not feasible
