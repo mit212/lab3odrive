@@ -19,11 +19,12 @@ if __name__=="__main__":
         end_point_list = [[1.1, 1.2],[1.1, 1.2],[1,1],[1.2,1],[1.3,1.1],[1.15,1]]
         q0 = [0,0]
         valid_ik = True
+        epsilon = 0.0001
         for i in range(0,len(end_point_list)):
             print(correct_list[i])
             target_xz =  end_point_list[i]
             q_sol = planner.ik(target_xz, q0)
-            if q_sol == correct_list[i]:
+            if abs(q_sol - correct_list[i]) < epsilon:
                 valid_ik = valid_ik
             else:
                 valid_ik = False
